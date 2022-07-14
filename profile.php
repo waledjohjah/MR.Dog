@@ -6,7 +6,7 @@
   session_start();
 
   if (!isset($_SESSION['owner_id'])){
-    header("Location: login.php");
+    header('location:'.URL.'login.php');
   } 
   $image_url=$_SESSION["owner_url"];
   if(!$image_url) $image_url = "images/upload/defultimage.jpg";
@@ -92,44 +92,45 @@ if (isset($_GET["state"]))
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark nav-dark mb-4">
-    <div class="container-fluid">
-      <section><a href="index.php" id="logo"></a></section>
-      <section><img src="<?php  echo $image_defult ?>" onClick="parent.location='profile.php'"  class="persona" alt="icon-image"></section>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">My Dogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="lostDog.php">Lost Dogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="#">Report Found dog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Nearby PetShop</a>
-          </li>
-        </ul>
-        <div class="d-flex">
-            <a href="logout.php" class="btn btn-info btn-lg">
-             <i class="fas fa-arrow-right"></i>&nbsp;
-              <span class="glyphicon glyphicon-log-out"></span> Log out
-            </a>
-            <section >
-            <section><img src="<?php  echo $image_defult ?>" onClick="parent.location='profile.php'"  class="persona"  alt="Username" ></section>
 
-            </section>
+    <nav class="navbar navbar-expand-md navbar-dark nav-dark mb-4">
+        <div class="container-fluid">
+          <section><a href="index.php" id="logo"></a></section>
+          <section><img src="<?php  echo $image_url ?>" onClick="parent.location='profile.php'"  class="persona" alt="icon-image"></section>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">My Dogs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="lostDog.php">Lost Dogs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#">Report Found dog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Nearby PetShop</a>
+              </li>
+            </ul>
+            <div class="d-flex">
+                <a href="logout.php" class="btn btn-info btn-lg">
+                <i class="fas fa-arrow-right"></i>&nbsp;
+                  <span class="glyphicon glyphicon-log-out"></span> Log out
+                </a>
+                <section >
+                <section><img src="<?php  echo $image_url ?>" onClick="parent.location='profile.php'"  class="persona"  alt="Username" ></section>
+
+                </section>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </nav>
+      </nav>
   <div id="wrapper"> 
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
@@ -166,7 +167,7 @@ if (isset($_GET["state"]))
                                   <div class="icon-box">
                                     <i class="material-icons">&#xE5CD;</i>
                                   </div>						
-                                  <h4 class="modal-title w-100">Are you sure?</h4>	
+                                  <h4 class="modal-title w-100">Are you sure to delete this account?</h4>	
                                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 </div>
                                 <div class="modal-body">

@@ -6,7 +6,7 @@
   session_start();
 
   if (!isset($_SESSION['owner_id'])){
-    header("Location: login.php");
+    header('Location:' .URL. 'login.php');
   } 
   $image_url=$_SESSION["owner_url"];
   if(!$image_url) $image_url = "images/upload/defultimage.jpg";
@@ -45,17 +45,18 @@
         <script src="includes/js/scripts.js"></script>
 </head>
 <body id="edit">
+
     <nav class="navbar navbar-expand-md navbar-dark nav-dark mb-4">
-        <div class="container-fluid">
+            <div class="container-fluid">
             <section><a href="index.php" id="logo"></a></section>
-            <section><img src="<?php  echo $image_url ?>" onClick="parent.location='login.php'"  class="persona" alt="icon-image"></section>
+            <section><img src="<?php  echo $image_url ?>" onClick="parent.location='profile.php'"  class="persona" alt="icon-image"></section>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">My Dogs</a>
@@ -81,8 +82,8 @@
                     </section>
                 </div>
             </div>
-        </div>
-    </nav>
+            </div>
+        </nav>
     <div id="wrapper"> 
             <div class="container rounded bg-white mt-5 mb-5">
                 <div class="row">
@@ -90,7 +91,7 @@
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="<?php  echo $image_url ?>"><span class="font-weight-bold"><?php echo  $row['owner_name'] ?></span><span class="text-black-50"><?php echo  $row['owner_email'] ?></span><span> </span></div>
                     </div>
                 <div class="col-md-5 border-right">
-                        <form action="profile.php" method="GET">
+                        <form action="http://se.shenkar.ac.il/students/2021-2022/web1/dev_207/profile.php" method="GET">
 
                             <div class="p-3 py-5">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -103,7 +104,19 @@
                                         <div class="col-md-12"><label class="labels">City</label><input type="text" name="owner_city" class="form-control" placeholder="enter Your City" value="<?php echo $row['owner_city'] ?>" required></div>
                                         <div class="col-md-12"><label class="labels">Phone</label><input type="tel" name="owner_phone" class="form-control" placeholder="enter phone number" value="<?php echo $row['owner_phone'] ?>" required></div>
                                         <div class="col-md-12"><label class="labels">Post Code</label><input type="text" name="post_code" class="form-control" placeholder="enter Your Post Code" value="<?php echo $row['post_code'] ?>" required></div>
-                                        <div class="col-md-12"><label class="labels">Picture</label><input type="text" name="owner_picture" class="form-control" placeholder="upload picture" value="<?php echo $row['owner_picture'] ?>" ></div>
+                                        <div class="col-md-12"><label class="labels">Picture</label>
+                                        <select class="form-select"  name="owner_picture" data-selected="<?php echo $row['owner_picture'];?>">
+
+                                                <option >images/upload/waled.jpg</option>
+
+                                                <option >images/upload/hade.jpg</option>
+
+                                                <option >images/upload/defultimage.jpg</option>
+
+                                                <option >images/upload/Sarah-modified.png</option>
+
+                                        </select>
+                                       
 
                                     </div>
                                     <input type="hidden" name="state" value="edit">

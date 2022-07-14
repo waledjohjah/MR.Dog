@@ -1,9 +1,8 @@
 <?php 
-
+include 'config.php';
 session_start();
 session_destroy();
-
-header('Location: login.php');
+header('Location:' .URL. 'login.php');
 
 ?>
 

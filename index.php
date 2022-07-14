@@ -3,16 +3,31 @@
   include 'config.php';
 
   header("Cache-Control: no-cache, no-store", true);
+  error_reporting(0);
   session_start();
 
   if (!isset($_SESSION['owner_id'])){
+
     header("Location: login.php");
   } 
   $image_url=$_SESSION["owner_url"];
   if(!$image_url) $image_url = "images/upload/defultimage.jpg";
 ?>
+
+<?php
+    if(isset($_GET['deletedog'])){
+      $dogdelete=$_GET['deletedog'];
+      $query_delete="DELETE FROM tbl_dog_207 WHERE dog_id=".$dogdelete;
+      $result_delete= mysqli_query($connection, $query_delete);
+      echo "<script>alert('Deleted successfully!')</script>";
+
+      if(!$result_delete) {
+          die("DB query failed.");
+      }
+    }
+?>
 <?php 
- /* $dogid=$_GET['dogid'];*/
+ 
   $query="SELECT *
   FROM tbl_ownerdog_207 o
   RIGHT JOIN tbl_dog_207 d ON d.owner_id = o.owner_id
@@ -44,109 +59,112 @@
 <body>
 
   <nav class="navbar navbar-expand-md navbar-dark nav-dark mb-4">
-    <div class="container-fluid">
-      <section><a href="index.php" id="logo"></a></section>
-      <section><img src="<?php  echo $image_url ?>" onClick="parent.location='profile.php'"  class="persona" alt="icon-image"></section>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">My Dogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="lostDog.php">Lost Dogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="#">Report Found dog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Nearby PetShop</a>
-          </li>
-        </ul>
-        <div class="d-flex">
-            <a href="logout.php" class="btn btn-info btn-lg">
-             <i class="fas fa-arrow-right"></i>&nbsp;
-              <span class="glyphicon glyphicon-log-out"></span> Log out
-            </a>
-            <section >
-            <section><img src="<?php  echo $image_url ?>" onClick="parent.location='profile.php'"  class="persona"  alt="Username" ></section>
+        <div class="container-fluid">
+          <section><a href="index.php" id="logo"></a></section>
+          <section><img src="<?php  echo $image_url ?>" onClick="parent.location='profile.php'"  class="persona" alt="icon-image"></section>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">My Dogs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="lostDog.php">Lost Dogs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#">Report Found dog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Nearby PetShop</a>
+              </li>
+            </ul>
+            <div class="d-flex">
+                <a href="logout.php" class="btn btn-info btn-lg">
+                <i class="fas fa-arrow-right"></i>&nbsp;
+                  <span class="glyphicon glyphicon-log-out"></span> Log out
+                </a>
+                <section >
+                <section><img src="<?php  echo $image_url ?>" onClick="parent.location='profile.php'"  class="persona"  alt="Username" ></section>
 
-            </section>
+                </section>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </nav>
-  <div id="wrapper"> 
-  <div class="label-yourdog">
-    <section class="Your-dog"><h2>Your Dogs</h2></section>
-    <section><p id="add" onClick="parent.location='create-object.php'" ></p></section>
+      </nav>
+      <section class="headline">
+        <h1>Welcome, <?php echo $_SESSION['owner_name'];?>! </h1>
+        <p><i>Welcome to your Mr.Dog - Reuniting you with your dogs.</i></p>
+      </section>
+      <div id="wrapper"> 
+        <div class="label-yourdog">
+          <section class="Your-dog"><h2>Your Dogs</h2></section>
+          <section><p id="add" onClick="parent.location='create-object.php'" ></p></section>
 
-  </div>
-  <main>
-    <?php 
-      $location="parent.location='page2.php'";
-
-      while($row = mysqli_fetch_assoc($result)){  
-      
-        $dog_name = $row["dog_name"];
-        $dog_pic = $row["dog_picture"];
-        echo   '<div class="card-img">';
-        echo      '<img src="'.$dog_pic.'" onClick="parent.location='.$location.'" class="card-img-top" alt='.$dog_name.'" title="Charlie">';
-        echo        '<div class="card-body1">';
-        echo          '<section> <p class="card-title"><a href="page2.php">'.$dog_name.'</a></p></section>';
-        echo        '</div>';
-        echo   '</div>';
-    }?>
-    
-    
-  </main>
-  <div class="label-yourdog">
-     <section class="Your-dog"><h2>Plans</h2></section>
-    </div>
-    <div class='container'>
-      <div class="flex-box">
-          <div>
-            <img src="images/Purple-modified.png" class='iconDetails1' alt="icon-img">
-          </div>	
-          <section>
-            <p>20 FEB</p>
-            <div>Going for a walk</div>
-          </section>
-      </div>
-      <div class="flex-box">
-        <div>
-          <img src="images/Green-modified.png" class='iconDetails1' alt="icon-img">
-        </div>	
-        <section >
-          <p>13 AUG</p>
-          <div>Visit the vet</div>
-        </section>
-    </div>
-    </div>
-    <div class="label-yourdog">
-      <section class="Your-dog"><h2>News</h2></section>
-    </div>
-    <div  class="flex-contner">
-        <div>
-          <img src="images/Jack-2.jpg"  alt="icon-img">
-          <p>Looking for a home!
-          </p>
-          <section><a href="#" >Read more<img src="images/Vector.png"></a></section>
-      </div>
-      <div>
-        <img src="images/Jack.jpg"  alt="icon-img">
-        <p>Brown Puppy Found
-        </p>
-        <section><a href="#" >Read more<img src="images/Vector.png" alt="icon-img"></a></section>
+        </div>
+      <main>
+        <?php 
+          while($row = mysqli_fetch_assoc($result)){  
+            $location="'page2.php?dogid=".$row['dog_id']."'";
+            $dog_name = $row["dog_name"];
+            $dog_pic = $row["dog_picture"];
+            echo   '<div class="card-img">';
+            echo      '<img src="'.$dog_pic.'" onClick="parent.location='.$location.'" class="card-img-top" alt='.$dog_name.'" title="Charlie">';
+            echo        '<div class="card-body1">';
+            echo          '<section> <p class="card-title"><a href="page2.php?dogid='.$row['dog_id'].'">'.$dog_name.'</a></p></section>';
+            echo        '</div>';
+            echo   '</div>';
+        }?>
         
-      </div>
-    </div>
-</div> 
+        
+        
+      </main>
+      <div class="label-yourdog">
+          <section class="Your-dog"><h2>Plans</h2></section>
+          </div>
+          <div class='container'>
+            <div class="flex-box">
+                <div>
+                  <img src="images/Purple-modified.png" class='iconDetails1' alt="icon-img">
+                </div>	
+                <section>
+                  <p>20 FEB</p>
+                  <div>Going for a walk</div>
+                </section>
+            </div>
+            <div class="flex-box">
+              <div>
+                <img src="images/Green-modified.png" class='iconDetails1' alt="icon-img">
+              </div>	
+              <section >
+                <p>13 AUG</p>
+                <div>Visit the vet</div>
+              </section>
+          </div>
+          </div>
+          <div class="label-yourdog">
+            <section class="Your-dog"><h2>News</h2></section>
+          </div>
+          <div  class="flex-contner">
+              <div>
+                <img src="images/Jack-2.jpg"  alt="icon-img">
+                <p>Looking for a home!
+                </p>
+                <section><a href="#" >Read more<img src="images/Vector.png"></a></section>
+            </div>
+            <div>
+              <img src="images/Jack.jpg"  alt="icon-img">
+              <p>Brown Puppy Found
+              </p>
+              <section><a href="#" >Read more<img src="images/Vector.png" alt="icon-img"></a></section>
+              
+            </div>
+          </div>
+      </div> 
 
   <footer class="text-center text-white" style="background-color: #f1f1f1;">
       

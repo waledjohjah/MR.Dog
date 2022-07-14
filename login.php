@@ -5,7 +5,7 @@
   	header("Cache-Control: no-cache, no-store", true);
   	error_reporting(0);
 	session_start();
-
+/***************deleteAcount */
 	if (isset($_SESSION['owner_id'])) {
 		if(isset($_GET["deleteaccount"])){
 			$query_delete="DELETE FROM tbl_ownerdog_207 WHERE owner_id=" . $_SESSION["owner_id"] ;
@@ -14,18 +14,18 @@
 			if(!$result_delete){
 				die("DB query failed.");
 			}
-			header('Location: login.php');
+			header('Location:' .URL. 'login.php');
 			 session_destroy();
 		}
 		else{
-			header('Location: index.php');
+			header('Location:' .URL. 'index.php');
 		}
 	
 	}
 	if (isset($_POST['submit'])) 
     {
 		$email = $_POST['email'];
-		$password = md5($_POST['password']);
+		$password = $_POST['password'];
 		$query  = "SELECT * FROM tbl_ownerdog_207 WHERE owner_email='" 
 
 		. $_POST["email"] 
@@ -48,7 +48,7 @@
 			$_SESSION['owner_url'] = $row['owner_picture'];
 			mysqli_free_result($result);
 			mysqli_close($connection);
-			header("Location: index.php");
+			header('Location:' .URL. 'index.php');
 			exit(1);
 		} else {
 			echo "<script>alert('Woops! Email or Password is Wrong.')</script>";
@@ -58,9 +58,8 @@
 
 ?>
 
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,11 +68,13 @@
 
 	<link rel="stylesheet" href="includes/css/style.css">
 
-	<title>Login Form - Pure Coding</title>
+	<title>Login</title>
 </head>
 <body id="loginlayout">
 	<div class="containerlogin">
 		<form action="" method="POST" class="login-email">
+			<section><p class="loginimage"></p></section>
+			<p class="login-text" style="font-size: 1.5rem; ">MR.DOG</p>
 			<p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
 			<div class="input-group">
 				<input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>" required>

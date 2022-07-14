@@ -8,8 +8,10 @@ error_reporting(0);
 session_start();
 
 if (isset($_SESSION['username'])) {
-	header('Location: login.php');
+	header('location:'.URL.'login.php');
 }
+$owner_url=$_SESSION["owner_url"];
+if(!$owner_url) $owner_url = "images/upload/defultimage.jpg";
 
 if (isset($_POST['submit'])) {
   $username = $_POST['username'];
@@ -18,8 +20,8 @@ if (isset($_POST['submit'])) {
   $city= $_POST['owner_city'];
   $address= $_POST['owner_address'];
   $postcode=$_POST['post_code'];
-  $password = md5($_POST['password']);
-  $cpassword = md5($_POST['cpassword']);
+  $password = $_POST['password'];
+  $cpassword = $_POST['cpassword'];
   $owner_url=$_POST['owner_url'];
 
   if ($password == $cpassword) {
@@ -40,6 +42,7 @@ if (isset($_POST['submit'])) {
 		$_POST['password'] = "";
 		$_POST['cpassword'] = "";
 		$_POST['owner_url'] = "";
+		header('location:'.URL.'login.php');
 	  } else {
 		echo "<script>alert('Woops! Something Wrong Went.')</script>";
 	  }
@@ -56,7 +59,7 @@ if (isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,10 +90,18 @@ if (isset($_POST['submit'])) {
 				<input type="text" placeholder="Address" name="owner_address" value="<?php  echo $address; ?>" required>
 			</div>
 			<div class="input-group">
-				<input type="text" placeholder="PostCode" name="post_code" value="<?php echo $postcode; ?>"  pattern="[0-9]{5}" required>
+				<input type="text" placeholder="PostCode" name="post_code" value="<?php echo $postcode; ?>"  required>
 			</div>
 			<div class="input-group">
-				<input type="text" placeholder="Picture" name="owner_url" value="<?php echo $_POST['owner_url']; ?>" required>
+					<select  name="owner_url" data-selected="">
+						
+							<option >images/upload/defultimage.jpg</option>
+							<option >images/upload/waled.jpg</option>
+							<option >images/upload/hade.jpg</option>
+							<option >images/upload/Sarah-modified.png</option>
+
+					</select>
+				<!--<input type="text" placeholder="Picture" name="owner_url" value="?>" required>-->
 			</div>
 			<div class="input-group">
 				<input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required>
